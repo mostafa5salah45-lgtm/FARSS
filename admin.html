@@ -1,567 +1,1347 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>F-A-R-S-S | Print Shop Manager</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,600..900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#eceff3;--panel:#fff;--ink:#14263d;--mute:#5a6879;--line:#dbe1e9;--line2:#c8d0db;--c:#0095b6;--cb:#00768f;--m:#d2336b;--y:#f0b400;--ok:#1b8a5a;--bad:#c62828;--navy:#101f33;--sh:0 1px 2px rgba(16,31,51,.06);--n-bg:#e3f2fd;--n-fg:#0d47a1;--p-bg:#fff3cd;--p-fg:#7a5a00;--r-bg:#e0f5ea;--r-fg:#13633f;--d-bg:#e6e9ee;--d-fg:#46515f;--l-bg:#fde4e4;--l-fg:#a11b1b;--disp:Archivo,"IBM Plex Sans",Arial,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1320;--panel:#142137;--ink:#e8eef6;--mute:#94a4b9;--line:#26354c;--line2:#34465f;--cb:#0b88a6;--navy:#08101c;--sh:none;--n-bg:rgba(66,165,245,.16);--n-fg:#8cc8ff;--p-bg:rgba(240,180,0,.16);--p-fg:#f3c94d;--r-bg:rgba(27,138,90,.2);--r-fg:#5fd29b;--d-bg:rgba(148,164,185,.16);--d-fg:#b3c0d2;--l-bg:rgba(198,40,40,.22);--l-fg:#ff9a9a}}
-:root[data-theme="dark"]{--bg:#0b1320;--panel:#142137;--ink:#e8eef6;--mute:#94a4b9;--line:#26354c;--line2:#34465f;--cb:#0b88a6;--navy:#08101c;--sh:none;--n-bg:rgba(66,165,245,.16);--n-fg:#8cc8ff;--p-bg:rgba(240,180,0,.16);--p-fg:#f3c94d;--r-bg:rgba(27,138,90,.2);--r-fg:#5fd29b;--d-bg:rgba(148,164,185,.16);--d-fg:#b3c0d2;--l-bg:rgba(198,40,40,.22);--l-fg:#ff9a9a}
-*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.55 "IBM Plex Sans",Arial,sans-serif;font-variant-numeric:tabular-nums;min-height:100vh;-webkit-font-smoothing:antialiased}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F-A-R-S-S — استيكر وهانج تاج مخصص | الإسكندرية</title>
+  <meta name="description" content="مطبعة متخصصة في الاستيكر والهانج تاج المخصص في الإسكندرية. اختار المقاس والخامة والتشطيب واحصل على سعر مؤكد قبل الطباعة." />
+  <meta property="og:title" content="F-A-R-S-S — استيكر وهانج تاج" />
+  <meta property="og:description" content="استيكر وهانج تاج بتصميمك، مطبوع بعناية في الإسكندرية." />
+  <meta property="og:type" content="website" />
 
-/* wordmark: the four hyphens are the C, M, Y and K inks */
-.wm{display:inline-flex;align-items:center;font-family:var(--disp);font-stretch:125%;font-weight:800;letter-spacing:.02em;line-height:1;white-space:nowrap}
-.wm i{display:inline-block;width:.46em;height:.15em;margin:0 .1em;border-radius:1px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.wm i:nth-child(1){background:var(--c)}.wm i:nth-child(2){background:var(--m)}.wm i:nth-child(3){background:var(--y)}.wm i:nth-child(4){background:currentColor}
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
 
-/* layout */
-.app{min-height:100vh}
-nav{background:var(--navy);color:#fff;position:sticky;top:0;z-index:20}
-nav .top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px max(24px,calc((100% - 1140px)/2 + 34px))}
-.bw{display:flex;align-items:baseline;gap:14px;min-width:0}
-.brand{font-size:21px;flex:none}
-.bs{color:#8fa1b8;font-size:13px;white-space:nowrap}
-.tools{display:flex;align-items:center;gap:2px;flex:none}
-.syst{color:#8fa1b8;font-size:12.5px;margin-inline-end:12px;white-space:nowrap}.syst.bad{color:#ffb4b4}
-#who{color:#8fa1b8;font-size:12.5px;margin-inline-end:10px;white-space:nowrap}
-.tabs{display:flex;gap:2px;padding:0 max(10px,calc((100% - 1140px)/2 + 20px));border-top:1px solid rgba(255,255,255,.1);overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-nav button{display:flex;align-items:center;gap:9px;background:none;border:0;color:#bcc9da;font:inherit;cursor:pointer;white-space:nowrap;transition:background .12s,color .12s}
-nav button svg{width:18px;height:18px;flex:none;opacity:.85}
-nav button:hover{background:rgba(255,255,255,.07);color:#fff}
-.tabs button{padding:12px 14px;border-bottom:3px solid transparent;border-radius:0}
-.tabs button.on{color:#fff;font-weight:600;border-bottom-color:var(--c);background:rgba(255,255,255,.05)}
-.tabs button.on svg{opacity:1;color:#4fd0ea}
-.tools button{width:36px;height:36px;padding:0;justify-content:center;border-radius:8px}
-main{padding:30px 34px 40px;max-width:1140px;width:100%;margin:0 auto}
-h1{font:700 25px/1.2 var(--disp);letter-spacing:-.01em;margin:0 0 6px}
-h2{font:600 16px/1.3 var(--disp);margin:0 0 12px}
-.sub{color:var(--mute);margin:0 0 22px;max-width:68ch}
-.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--sh);padding:20px;margin-bottom:16px}
+  <style>
+    :root {
+      --bg: #f7f6f3;
+      --card: #ffffff;
+      --ink: #141b4d;
+      --ink-deep: #0d1235;
+      --muted: #6b7280;
+      --border: #e5e2db;
+      --accent: #c99a2e;
+      --accent-soft: #f6d56a;
+      --primary: #141b4d;
+      --primary-fg: #ffffff;
+      --cyan: #22d3ee;
+      --magenta: #ec4899;
+      --yellow: #facc15;
+      --shadow-card: 0 4px 20px -4px rgba(20, 27, 77, 0.08);
+      --shadow-lift: 0 12px 32px -8px rgba(20, 27, 77, 0.16);
+      --radius: 1rem;
+    }
 
-/* key numbers as one connected strip */
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:var(--sh);margin-bottom:16px}
-.kpi{background:var(--panel);padding:16px 18px 15px}
-.kpi::before{content:"";display:block;width:22px;height:4px;border-radius:2px;background:var(--c);margin-bottom:12px}
-.kpi:nth-child(2)::before{background:var(--y)}.kpi:nth-child(3)::before{background:var(--m)}.kpi:nth-child(4)::before{background:var(--ok)}
-.kpi b{display:block;font:700 26px/1.2 var(--disp);letter-spacing:-.01em;overflow-wrap:anywhere}
-.kpi span{color:var(--mute);font-size:13px}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* tables */
-.tw{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:640px}
-th,td{padding:11px 14px;text-align:start;border-bottom:1px solid var(--line);white-space:nowrap}
-th{font-weight:600;color:var(--mute);font-size:13px;border-bottom-color:var(--line2)}
-tr:last-child td{border-bottom:0}
-tr:hover td{background:rgba(0,149,182,.06)}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* forms */
-input,select,textarea{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:8px;padding:9px 12px;width:100%}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--c);outline-offset:0;border-color:var(--c)}
-button:focus-visible{outline:2px solid var(--c);outline-offset:2px}
-label{display:block;font-size:13px;color:var(--mute);margin-bottom:4px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px 12px}
-.btn{background:var(--cb);color:#fff;border:0;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;transition:filter .12s,background .12s}
-.btn:hover{filter:brightness(1.1)}
-.btn.g{background:transparent;color:var(--ink);border:1px solid var(--line2)}.btn.g:hover{background:var(--bg);filter:none}
-.btn.d{background:var(--bad)}.btn.s{padding:5px 11px;font-size:13px}
-.search{max-width:300px}
+    body {
+      font-family: "IBM Plex Sans Arabic", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* status tags */
-.tag{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:600}
-.s-new{background:var(--n-bg);color:var(--n-fg)}.s-prod{background:var(--p-bg);color:var(--p-fg)}.s-ready{background:var(--r-bg);color:var(--r-fg)}.s-done{background:var(--d-bg);color:var(--d-fg)}.s-late{background:var(--l-bg);color:var(--l-fg)}
+    .font-display {
+      font-family: "Fraunces", Georgia, serif;
+    }
 
-/* dialogs */
-.modal{position:fixed;inset:0;background:rgba(8,16,28,.6);display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:28px 12px;z-index:50}
-.modal.open{display:flex}
-.box{background:var(--panel);border-radius:14px;padding:24px;width:100%;max-width:680px;box-shadow:0 24px 64px rgba(0,0,0,.28)}
-.mut{color:var(--mute)}.neg{color:var(--bad);font-weight:600}.pos{color:var(--ok);font-weight:600}
-.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:14px}
-.res div{background:var(--bg);border-radius:10px;padding:11px 14px}.res b{display:block;font:700 19px/1.4 var(--disp)}
-.inv{background:#fff;color:#111;padding:28px;border-radius:6px}.inv table{min-width:0}.inv th{color:#555}.inv h2{margin-bottom:4px}
-.empty{padding:34px;text-align:center;color:var(--mute)}
-[hidden]{display:none!important}
-body.locked .app{display:none}
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-/* production board */
-.kan{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
-.kcol{background:rgba(120,135,158,.07);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:12px;padding:12px;min-height:240px}
-.kcol:nth-child(2){border-top-color:var(--y)}.kcol:nth-child(3){border-top-color:var(--ok)}.kcol:nth-child(4){border-top-color:var(--line2)}
-.kcol h2{font-size:15px;margin-bottom:10px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:11px 12px;margin-bottom:8px;box-shadow:var(--sh)}
-.card.lt{border-inline-start:4px solid var(--bad)}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:4px 12px}
-.chip button{border:0;background:none;color:var(--bad);cursor:pointer;font-size:16px;line-height:1;padding:0 0 0 4px}
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
 
-/* chart */
-.bars{display:flex;gap:12px;height:176px}
-.bar1{display:flex;flex-direction:column;flex:1;height:100%;align-items:center;font-size:12px;color:var(--mute)}
-.bar1 b{color:var(--ink);font-weight:600}
-.col{flex:1;width:100%;display:flex;align-items:flex-end}
-.col i{width:100%;background:var(--c);border-radius:5px 5px 0 0;min-height:2px}
-.two{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    /* ========== Header ========== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(247, 246, 243, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* sign in */
-#auth{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
-.aside{background:var(--navy);color:#fff;padding:52px 56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
-.aside .wm{font-size:clamp(34px,4.6vw,64px);position:relative}
-.aside p{color:#9fb0c5;max-width:30ch;margin:0;position:relative;font-size:16px}
-.aside svg{position:absolute;right:-90px;bottom:-90px;width:420px;height:420px;color:#fff;opacity:.09}
-.aform{display:flex;align-items:center;justify-content:center;padding:32px 24px}
-.acard{width:100%;max-width:360px}
-.acard h2{font-size:26px;letter-spacing:-.01em;margin-bottom:6px}
+    .header-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      height: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-@media(max-width:860px){
- nav{position:static}
- nav .top{padding:10px 14px}.bs,#who,.syst{display:none}.brand{font-size:18px}
- .tabs{padding:0 6px}
- main{padding:18px 14px 32px}
- .kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}.kpi b{font-size:22px}
- .two{grid-template-columns:1fr}
- #auth{grid-template-columns:1fr;min-height:100vh;align-content:start}
- .aside{padding:28px 24px;gap:10px}.aside p,.aside svg{display:none}.aside .wm{font-size:34px}
- .aform{padding:28px 20px}
-}
-@media print{body{background:#fff}.noprint{display:none!important}.app{display:none}.modal{position:static;display:none;padding:0;background:none}.modal.print{display:block}.box{max-width:none;padding:0;box-shadow:none;border-radius:0}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-left: auto;
+    }
+
+    .logo svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: var(--accent);
+    }
+
+    .logo span {
+      font-family: "Fraunces", serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+      direction: ltr;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--ink);
+      padding: 0.4rem 1rem;
+    }
+
+    .btn-outline:hover {
+      background: #ebe8e2;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--primary-fg);
+      padding: 0.45rem 1.1rem;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.15);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #1a1408;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+      box-shadow: var(--shadow-lift);
+    }
+
+    .btn-accent:hover {
+      filter: brightness(1.08);
+    }
+
+    .cart-badge {
+      display: grid;
+      place-items: center;
+      min-width: 1.25rem;
+      height: 1.25rem;
+      padding: 0 0.25rem;
+      border-radius: 9999px;
+      background: var(--accent);
+      color: #1a1408;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    /* ========== Hero ========== */
+    .hero {
+      background: linear-gradient(145deg, #141b4d 0%, #1e2a6b 55%, #0d1235 100%);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 5rem 1.25rem 6rem;
+      display: grid;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1.1fr 0.9fr;
+        padding: 7rem 1.25rem;
+      }
+    }
+
+    .hero-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--accent-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .cmYK {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .cmYK i {
+      width: 1rem;
+      height: 0.375rem;
+      border-radius: 2px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin-top: 1.5rem;
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 32rem;
+    }
+
+    .hero-actions {
+      margin-top: 2.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-actions .btn-ghost {
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    .hero-actions .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-stats {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 28rem;
+    }
+
+    .hero-stats dt {
+      font-family: "Fraunces", serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--accent-soft);
+    }
+
+    .hero-stats dd {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.15rem;
+    }
+
+    /* Product previews in hero */
+    .hero-previews {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 24rem;
+      margin: 0 auto;
+    }
+
+    .preview-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      box-shadow: var(--shadow-lift);
+    }
+
+    .preview-card:nth-child(even) {
+      transform: translateY(2rem);
+    }
+
+    .preview-card svg {
+      width: 100%;
+      height: 8rem;
+    }
+
+    /* ========== Sections ========== */
+    .section {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 5rem 1.25rem;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.25rem);
+      font-weight: 600;
+      margin-top: 0.35rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 0.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      padding: 0.25rem;
+    }
+
+    .filter-btn {
+      border: none;
+      background: transparent;
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lift);
+    }
+
+    .product-visual {
+      height: 13rem;
+      background: #ebe8e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .product-visual svg {
+      height: 100%;
+      width: auto;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-visual svg {
+      transform: scale(1.06);
+    }
+
+    .product-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .product-type {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .product-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0.15rem;
+    }
+
+    .product-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+    }
+
+    .product-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .field-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: block;
+    }
+
+    .field {
+      width: 100%;
+      margin-top: 0.25rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 0.875rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .field:focus {
+      border-color: var(--accent);
+    }
+
+    .add-btn {
+      margin-top: auto;
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+
+    .add-btn:hover {
+      filter: brightness(1.2);
+    }
+
+    /* How it works */
+    .steps {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 768px) {
+      .steps {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .step-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .step-num {
+      font-family: "Fraunces", serif;
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .step-card h3 {
+      margin-top: 1rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+
+    .step-card p {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    /* Cart */
+    .cart-grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      .cart-grid {
+        grid-template-columns: 1.2fr 1fr;
+      }
+    }
+
+    .cart-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-card);
+    }
+
+    .cart-empty {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--muted);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .form-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: 0.9rem;
+      background: var(--accent);
+      color: #1a1408;
+      border: none;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+
+    .submit-btn:hover {
+      filter: brightness(1.08);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .note {
+      margin-top: 1rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--ink-deep);
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 5rem;
+    }
+
+    .footer-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      fill: var(--accent);
+    }
+
+    .footer-brand b {
+      font-family: "Fraunces", serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+      color: white;
+      direction: ltr;
+    }
+
+    .footer-address {
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      font-size: 0.875rem;
+    }
+
+    .footer-links a {
+      color: var(--accent-soft);
+      transition: opacity 0.15s;
+    }
+
+    .footer-links a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    /* Utility */
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
-<div class="app">
-<nav>
- <div class="top">
-  <div class="bw"><div class="brand"><span class="wm" role="img" aria-label="F-A-R-S-S">F<i></i>A<i></i>R<i></i>S<i></i>S</span></div><div class="bs">Print shop manager</div></div>
-  <div class="tools">
-   <span id="syncst" class="syst"></span><div id="who"></div>
-   <button id="theme" title="Dark mode" aria-label="Dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
-   <button id="bk" title="Export backup" aria-label="Export backup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button>
-   <button id="rs" title="Restore backup" aria-label="Restore backup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button>
-   <button id="lo" title="Log out" aria-label="Log out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button>
-  </div>
- </div>
- <div class="tabs">
-  <button data-v="dash" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Dashboard</button>
-  <button data-v="orders"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>Orders</button>
-  <button data-v="board"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18"/></svg>Production board</button>
-  <button data-v="cust"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Customers</button>
-  <button data-v="price"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h.01M12 19h.01M16 19h.01"/></svg>Price calculator</button>
-  <button data-v="sizes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.3 8.7 8.7 21.3a1 1 0 0 1-1.4 0L2.7 16.7a1 1 0 0 1 0-1.4L15.3 2.7a1 1 0 0 1 1.4 0l4.6 4.6a1 1 0 0 1 0 1.4Z"/><path d="m7.5 10.5 2 2M10.5 7.5l2 2M13.5 4.5l2 2M4.5 13.5l2 2"/></svg>Size library</button>
-  <button data-v="users" id="nu" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>Users</button>
-  <button data-v="sync"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 0-15.5-6.2L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 15.5 6.2L21 16"/><path d="M16 16h5v5"/></svg>Sync</button>
- </div>
-</nav>
-<main id="main"></main>
-</div>
-<div class="modal" id="modal"><div class="box" id="box"></div></div>
-<input type="file" id="file" accept=".json" hidden>
-<div id="auth" hidden></div>
-<script>
-const TYPES=["Sticker","Acetate","Thermal barcode","Hang tag","Care label","Carton label"];
-const DEF={cust:[],orders:[],seq:1,setup:150,min:200,
- rates:{"Sticker":0.012,"Acetate":0.02,"Thermal barcode":0.008,"Hang tag":0.015,"Care label":0.018,"Carton label":0.01},
- mats:{"Art paper":1,"Glossy coated":1.1,"Matte coated":1.1,"Thermal paper":0.9,"Kraft":1.2,"Cardboard 300g":1.25,"Satin":1.3,"PP synthetic":1.4,"PVC vinyl":1.5,"Transparent":1.6},
- cols:{"1 color":0.8,"2 colors":0.9,"CMYK":1,"CMYK + spot":1.2},
- fin:{"None":0,"Varnish":0.08,"Die-cut":0.1,"Numbering / variable data":0.12,"Lamination":0.15,"Foil":0.3},
- sizes:{"Sticker":[[3,2],[3,3],[4,4],[5,3],[5,5],[7,5],[10,5],[10,10]],
-  "Acetate":[[5,3],[6,4],[8,5],[10,6],[10,10],[15,10]],
-  "Thermal barcode":[[5,2.5],[6,4],[10,5],[10,7.5],[10,10],[10,15]],
-  "Hang tag":[[4,9],[5,9],[5,10],[6,10],[6,12],[7,15]],
-  "Care label":[[3,6],[4,8],[5,10]],
-  "Carton label":[[10,10],[10,15],[15,10],[15,15],[20,10],[20,15]]}};
-const ST={new:["New","s-new"],prod:["In production","s-prod"],ready:["Ready","s-ready"],done:["Delivered","s-done"]};
-const KEY="ceaser_labels_v1";
-const clone=o=>JSON.parse(JSON.stringify(o));
-let S=clone(DEF);
-function norm(){
- for(const k of ["rates","mats","cols","fin","sizes"])S[k]=Object.assign(clone(DEF[k]),S[k]);
- delete S.rates["Garment tag"];delete S.sizes["Garment tag"];
- S.orders.forEach(o=>{if(o.type==="Garment tag")o.type="Hang tag"});
-}
-try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
-norm();
 
-/* ---------- Cloud sync (JSONBin) ---------- */
-const lsSave=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-const save=()=>{stamp();lsSave();schedSync()};
-const SK="farss_sync_v1",SBASE="https://api.jsonbin.io/v3/b/",SETK=["rates","mats","cols","fin","sizes","setup","min"];
-let SY={bin:"",key:"",last:0,ok:null,msg:"",size:0,busy:false,again:false};
-try{Object.assign(SY,JSON.parse(localStorage.getItem(SK)||"{}"))}catch(e){}
-SY.busy=false;SY.again=false;
-const saveSY=()=>{try{localStorage.setItem(SK,JSON.stringify({bin:SY.bin,key:SY.key,last:SY.last}))}catch(e){}};
-const syOn=()=>!!(SY.bin&&SY.key);
-const rec=o=>{const c=Object.assign({},o);delete c._u;return JSON.stringify(c)};
-const setj=()=>JSON.stringify(SETK.map(k=>S[k]));
-const byId=(a,b)=>a.id<b.id?-1:a.id>b.id?1:0;
-let CACHE={},KNOWN={},SETJ="",ST_T=null;
-function prime(){CACHE={};KNOWN={};for(const o of S.orders.concat(S.cust)){CACHE[o.id]=rec(o);KNOWN[o.id]=1}SETJ=setj()}
-function stamp(){
- const now=Date.now(),cur={};S.del=S.del||{};
- for(const o of S.orders.concat(S.cust)){cur[o.id]=1;const j=rec(o);if(CACHE[o.id]!==j){o._u=now;CACHE[o.id]=j}}
- for(const id in KNOWN)if(!cur[id]){S.del[id]=now;delete CACHE[id]}
- KNOWN=cur;
- const sj=setj();if(sj!==SETJ){S.setU=now;SETJ=sj}
-}
-function payload(){
- const dl={};Object.keys(S.del||{}).sort().forEach(k=>dl[k]=S.del[k]);
- const set={};for(const k of SETK)set[k]=S[k];
- return{app:"farss",v:1,d:{cust:S.cust,orders:S.orders,seq:S.seq,del:dl,setU:S.setU||0,set}};
-}
-function merge(r){
- if(!r||!r.d)return;
- const R=r.d,now=Date.now(),del=Object.assign({},S.del||{});
- for(const id in(R.del||{}))del[id]=Math.max(del[id]||0,R.del[id]);
- for(const id in del)if(now-del[id]>90*864e5)delete del[id];
- const pick=(a,b)=>{const m=new Map();for(const o of a)m.set(o.id,o);
-  for(const o of(b||[])){const x=m.get(o.id);if(!x||(o._u||0)>(x._u||0))m.set(o.id,o)}
-  return[...m.values()].filter(o=>!(del[o.id]&&del[o.id]>=(o._u||0))).sort(byId)};
- S.cust=pick(S.cust,R.cust);S.orders=pick(S.orders,R.orders);S.del=del;
- if((R.setU||0)>(S.setU||0)&&R.set){for(const k of SETK)if(R.set[k]!==undefined)S[k]=R.set[k];S.setU=R.setU;norm()}
- S.seq=Math.max(S.seq||1,R.seq||1,S.orders.reduce((m,o)=>Math.max(m,o.no||0),0)+1);
- prime();
- const used=new Set();
- [...S.orders].sort((a,b)=>(a.no-b.no)||String(a.date||"").localeCompare(String(b.date||""))||byId(a,b)).forEach(o=>{
-  if(used.has(o.no)){o.no=S.seq++;o._u=Date.now();CACHE[o.id]=rec(o)}used.add(o.no)});
-}
-async function fail(r){let m="";try{m=(await r.json()).message||""}catch(e){}throw{http:r.status,msg:m}}
-function syErr(e){
- if(e&&e.size)return e.size;
- if(e&&e.http){if(/exhaust/i.test(e.msg||""))return"The JSONBin request quota is used up. Wait for the quota to reset or upgrade the plan.";
-  if(e.http===401||e.http===403)return"The access key was rejected. Check the key and that it can read and update bins.";
-  if(e.http===404)return"Bin not found. Check the Bin ID.";
-  return"JSONBin error "+e.http+(e.msg?": "+e.msg:"")}
- return"No connection. Changes are saved on this device and will sync when you are back online.";
-}
-async function syncNow(manual){
- if(!syOn())return;
- if(SY.busy){SY.again=true;return}
- clearTimeout(ST_T);SY.busy=true;syUI("Syncing...");
- const before=JSON.stringify([S.orders,S.cust,S.setU]);
- try{
-  const g=await fetch(SBASE+encodeURIComponent(SY.bin)+"/latest",{headers:{"X-Access-Key":SY.key}});
-  if(!g.ok)await fail(g);
-  const remote=(await g.json()).record;
-  stamp();merge(remote);
-  const out=JSON.stringify(payload());SY.size=new Blob([out]).size;
-  if(out!==JSON.stringify(remote)){
-   if(SY.size>100*1024)throw{size:"The data is over the 100 KB limit of the free JSONBin plan. Export a backup and remove old orders, or upgrade the JSONBin plan."};
-   const p=await fetch(SBASE+encodeURIComponent(SY.bin),{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":SY.key},body:out});
-   if(!p.ok)await fail(p);
-  }
-  lsSave();SY.last=Date.now();SY.ok=true;SY.msg="";
- }catch(e){SY.ok=false;SY.msg=syErr(e)}
- SY.busy=false;saveSY();syUI();
- if(SY.ok&&before!==JSON.stringify([S.orders,S.cust,S.setU])&&me&&view!=="sync"&&!document.querySelector("#modal.open")&&!/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||""))render();
- if(SY.again){SY.again=false;schedSync()}
-}
-function schedSync(){if(!syOn())return;if(SY.busy){SY.again=true;return}clearTimeout(ST_T);ST_T=setTimeout(()=>syncNow(),4000)}
-function syUI(t){
- const e=$("#syncst");let s="",bad=false;
- if(syOn()){if(t)s=t;else if(SY.ok===false){s="Sync problem";bad=true}else s=SY.last?"Synced "+new Date(SY.last).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"}):"Not synced yet"}
- if(e){e.textContent=s;e.className="syst"+(bad?" bad":"")}
- const st=$("#syst");
- if(st){st.className=SY.ok===false&&!t?"neg":"mut";
-  st.textContent=!syOn()?"Not connected. Data stays on this device only.":t?t:SY.ok===false?SY.msg:SY.last?"Last synced "+new Date(SY.last).toLocaleString():"Waiting for the first sync."}
- const sz=$("#sysz");if(sz){const kb=SY.size/1024;sz.textContent=kb.toFixed(1)+" KB of 100 KB (free JSONBin limit)";const b=$("#sybar");if(b)b.style.width=Math.min(100,kb)+"%"}
-}
-function syConnect(){
- const b=$("#sb").value.trim(),k=$("#sk").value.trim();
- if(!b){$("#sb").focus();return}
- if(k&&!/^\u2022+$/.test(k))SY.key=k;
- if(!SY.key){$("#sk").focus();return}
- SY.bin=b;SY.ok=null;SY.last=0;saveSY();syncNow(1);
-}
-function syOff(){if(!confirm("Disconnect this device from sync? Data stays on this device."))return;SY.bin="";SY.key="";SY.last=0;SY.ok=null;SY.msg="";saveSY();render();syUI()}
-function syncv(){
- SY.size=new Blob([JSON.stringify(payload())]).size;
- return`<h1>Sync</h1><p class="sub">Keep orders, customers and prices the same on every device through a private JSONBin bin. Sign-in accounts stay on each device.</p>
- <div class="panel"><h2>Connection</h2><div class="grid">
-  <div><label>Bin ID</label><input id="sb" value="${esc(SY.bin)}" autocomplete="off" autocapitalize="none" spellcheck="false"></div>
-  <div><label>Access key</label><input id="sk" type="password" value="${SY.key?"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022":""}" autocomplete="off" placeholder="Paste the access key"></div></div>
-  <div class="bar" style="margin:16px 0 0"><button class="btn" onclick="syConnect()">Save and sync</button><button class="btn g" onclick="syncNow(1)" ${syOn()?"":"disabled"}>Sync now</button>${syOn()?'<button class="btn g" onclick="syOff()">Disconnect</button>':""}</div>
-  <div id="syst" style="margin-top:12px"></div>
-  <div style="margin-top:14px"><div id="sysz" class="mut"></div><div style="height:6px;background:var(--line);border-radius:3px;margin-top:6px;overflow:hidden"><i id="sybar" style="display:block;height:100%;width:0;background:var(--c)"></i></div></div></div>
- <div class="panel"><h2>Set up on each device</h2>
-  <ol style="margin:0;padding-inline-start:20px;display:grid;gap:8px">
-   <li>In JSONBin open Bins, create a bin with the content <code>{"farss":true}</code>, keep it private, and copy its Bin ID.</li>
-   <li>In JSONBin open API Keys and create an Access Key that can read and update bins only. Copy it.</li>
-   <li>Paste both values above and press Save and sync. Do the same on every other device.</li>
-  </ol>
-  <p class="mut" style="margin-bottom:0">The key is stored only in this browser, never in the file. Anyone who has the key can read and replace the data, so keep it private. Sync runs after you save changes, when you sign in, and when you return to the tab.</p></div>`;
-}
-document.addEventListener("visibilitychange",()=>{if(!document.hidden&&syOn()&&me&&Date.now()-SY.last>180000)syncNow()});
-addEventListener("online",()=>{if(syOn()&&me)syncNow()});
-prime();
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 18h18l1.3-10-5.2 4L12 4.5 6.9 12 1.7 8z"/>
+        </svg>
+        <span>F-A-R-S-S</span>
+      </a>
+      <button class="btn btn-outline" type="button" id="langBtn">English</button>
+      <a href="#cart" class="btn btn-primary">
+        السلة
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
 
-const $=(s,r=document)=>r.querySelector(s);
-const esc=t=>String(t??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const money=n=>"EGP "+Number(n||0).toLocaleString("en-US",{maximumFractionDigits:2});
-const num=n=>Number(n).toLocaleString("en-US");
-const today=()=>new Date().toISOString().slice(0,10);
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const cname=id=>(S.cust.find(c=>c.id===id)||{name:"-"}).name;
-const late=o=>o.status!=="done"&&o.status!=="ready"&&o.due&&o.due<today();
-const VAT=0.14,tierD=q=>q>=50000?.15:q>=10000?.1:q>=5000?.05:0;
-const calc=(type,w,h,q,mat,col,fin)=>{const unit=Math.max(0,w*h*(S.rates[type]||0)*(S.mats[mat]||1)*(S.cols[col]||1)*(1+(S.fin[fin]||0)));const t=tierD(q);return{unit,tier:t,total:Math.max((unit*q+S.setup)*(1-t),S.min)}};
-let view="dash",q="",fs="all";
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">
+          <span class="cmYK">
+            <i style="background:#22d3ee"></i>
+            <i style="background:#ec4899"></i>
+            <i style="background:#facc15"></i>
+            <i style="background:#fff"></i>
+          </span>
+          مطبعة · إسكندرية
+        </div>
+        <h1>ليبلز بتحمل اسم براندك.</h1>
+        <p>استيكر وهانج تاج بتصميمك، بنطبعهم بعناية. اختار طلبك وبنأكدلك السعر قبل الطباعة.</p>
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-accent">شوف المنتجات</a>
+          <a href="https://wa.me/201281847512" target="_blank" rel="noopener" class="btn btn-ghost">واتساب</a>
+        </div>
+        <dl class="hero-stats">
+          <div>
+            <dt>+9</dt>
+            <dd>أشكال ليبلز</dd>
+          </div>
+          <div>
+            <dt>24 ساعة</dt>
+            <dd>رد على السعر</dd>
+          </div>
+          <div>
+            <dt>100%</dt>
+            <dd>حسب طلبك</dd>
+          </div>
+        </dl>
+      </div>
 
-function tag(o){if(late(o))return'<span class="tag s-late">Overdue</span>';const [t,c]=ST[o.status];return`<span class="tag ${c}">${t}</span>`}
+      <div class="hero-previews">
+        <div class="preview-card">
+          <svg viewBox="0 0 160 160" role="img" aria-label="استيكر دائري">
+            <ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/>
+            <circle cx="80" cy="80" r="62" fill="#2b3a9e"/>
+            <text x="80" y="88" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="22" fill="#fff">BRAND</text>
+            <text x="80" y="106" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-size="9" fill="#fff" opacity=".85">YOUR LOGO HERE</text>
+          </svg>
+        </div>
+        <div class="preview-card">
+          <svg viewBox="0 0 160 160" role="img" aria-label="استيكر مربع">
+            <ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/>
+            <rect x="22" y="22" width="116" height="116" rx="16" fill="#c8283c"/>
+            <text x="80" y="88" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="22" fill="#fff">BRAND</text>
+            <text x="80" y="106" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-size="9" fill="#fff" opacity=".85">YOUR LOGO HERE</text>
+          </svg>
+        </div>
+        <div class="preview-card">
+          <svg viewBox="0 0 160 160" role="img" aria-label="استيكر مستطيل">
+            <ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/>
+            <rect x="8" y="42" width="144" height="76" rx="12" fill="#c99a2e"/>
+            <text x="80" y="86" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="24" fill="#fff">BRAND</text>
+          </svg>
+        </div>
+        <div class="preview-card">
+          <svg viewBox="0 0 160 160" role="img" aria-label="استيكر شفاف">
+            <ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/>
+            <rect x="8" y="42" width="144" height="76" rx="12" fill="none" stroke="#2b3a9e" stroke-width="3" stroke-dasharray="6 5"/>
+            <text x="80" y="86" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="24" fill="#2b3a9e">BRAND</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
 
-const monthKey=d=>(d||"").slice(0,7);
-const prBadge=o=>o.pri==="urgent"?' <span class="tag s-late">Urgent</span>':"";
-const opts=(a,sel)=>a.map(k=>`<option ${k===sel?"selected":""}>${esc(k)}</option>`).join("");
-const tid=t=>t.replace(/\W/g,"");
-const byPri=(a,b)=>(a.pri==="urgent"?0:1)-(b.pri==="urgent"?0:1)||(a.due||"9").localeCompare(b.due||"9");
+  <!-- Products -->
+  <main>
+    <section id="products" class="section">
+      <div class="section-header">
+        <div>
+          <p class="section-label">الكتالوج</p>
+          <h2 class="section-title">منتجاتنا</h2>
+          <p class="section-desc">اختار المقاس والخامة والتشطيب والكمية.</p>
+        </div>
+        <div class="filters" role="tablist">
+          <button class="filter-btn active" data-filter="all" type="button">الكل</button>
+          <button class="filter-btn" data-filter="stk" type="button">استيكر</button>
+          <button class="filter-btn" data-filter="tag" type="button">هانج تاج</button>
+        </div>
+      </div>
 
-function dash(){
- const t=today(),act=S.orders.filter(o=>o.status!=="done");
- const rev=S.orders.reduce((a,o)=>a+o.total,0),paid=S.orders.reduce((a,o)=>a+o.paid,0);
- const dueToday=act.filter(o=>o.due===t),lates=act.filter(late);
- const rows=[...act].sort(byPri).slice(0,8);
- const months=[];for(let i=5;i>=0;i--){const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);months.push(d.toISOString().slice(0,7))}
- const mv=months.map(m=>S.orders.filter(o=>monthKey(o.date)===m).reduce((a,o)=>a+o.total,0)),mx=Math.max(...mv,1);
- const top=S.cust.map(c=>({n:c.name,t:S.orders.filter(o=>o.cid===c.id).reduce((a,o)=>a+o.total,0)})).filter(x=>x.t>0).sort((a,b)=>b.t-a.t).slice(0,5);
- return`<h1>Dashboard</h1><p class="sub">Today at a glance</p>
- <div class="kpis"><div class="kpi"><b>${act.length}</b><span>Active orders</span></div>
- <div class="kpi"><b>${dueToday.length}</b><span>Due today</span></div>
- <div class="kpi"><b class="${lates.length?"neg":""}">${lates.length}</b><span>Overdue orders</span></div>
- <div class="kpi"><b>${money(rev-paid)}</b><span>Outstanding balance</span></div></div>
- <div class="two"><div class="panel"><h2>Orders value, last 6 months (EGP)</h2><div class="bars">${months.map((m,i)=>`<div class="bar1"><div class="col"><i style="height:${Math.round(mv[i]/mx*100)}%"></i></div><b>${num(Math.round(mv[i]))}</b><span>${m.slice(5)}/${m.slice(2,4)}</span></div>`).join("")}</div></div>
- <div class="panel"><h2>Top customers</h2>${top.length?top.map(x=>`<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line)"><span>${esc(x.n)}</span><b>${money(x.t)}</b></div>`).join(""):'<div class="mut">No data yet.</div>'}</div></div>
- <div class="panel"><h2>Next deliveries</h2>${rows.length?`<div class="tw"><table><tr><th>No.</th><th>Customer</th><th>Type</th><th>Qty</th><th>Due</th><th>Status</th></tr>${rows.map(o=>`<tr><td>#${o.no}</td><td>${esc(cname(o.cid))}${prBadge(o)}</td><td>${esc(o.type)}</td><td>${num(o.qty)}</td><td>${o.due||"-"}</td><td>${tag(o)}</td></tr>`).join("")}</table></div>`:'<div class="empty">No active orders. Add one from the Orders page.</div>'}</div>
- <div class="panel"><h2>Revenue</h2><div class="res" style="margin:0"><div><span class="mut">Total ordered</span><b>${money(rev)}</b></div><div><span class="mut">Collected</span><b class="pos">${money(paid)}</b></div><div><span class="mut">Customers</span><b>${S.cust.length}</b></div></div></div>`;
-}
+      <div class="product-grid" id="productGrid">
 
-function orders(){
- const ql=q.toLowerCase();
- let l=S.orders.filter(o=>(fs==="all"||(fs==="late"?late(o):o.status===fs))&&(!q||(cname(o.cid)+o.type+o.no+(o.mat||"")+(o.notes||"")).toLowerCase().includes(ql)));
- l=[...l].sort((a,b)=>b.no-a.no);
- return`<h1>Orders</h1><p class="sub">All print jobs and their status</p>
- <div class="bar noprint"><button class="btn" onclick="orderForm()">+ New order</button>
- <input class="search" placeholder="Search customer, type or no." value="${esc(q)}" oninput="q=this.value;go(1)" id="qs">
- <select style="width:auto" onchange="fs=this.value;go()"><option value="all">All statuses</option>${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${fs===k?"selected":""}>${v[0]}</option>`).join("")}<option value="late" ${fs==="late"?"selected":""}>Overdue</option></select>
- <button class="btn g" style="margin-inline-start:auto" onclick="csv()">Export CSV</button></div>
- <div class="panel tw">${l.length?`<table><tr><th>No.</th><th>Customer</th><th>Job</th><th>Size</th><th>Qty</th><th>Total</th><th>Balance</th><th>Due</th><th>Status</th><th></th></tr>${l.map(o=>`<tr><td>#${o.no}</td><td>${esc(cname(o.cid))}${prBadge(o)}</td><td>${esc(o.type)}<div class="mut" style="font-size:12px">${esc(o.mat||"")}${o.col?" · "+esc(o.col):""}</div></td><td>${o.w}×${o.h} cm</td><td>${num(o.qty)}</td><td>${money(o.total)}</td><td class="${o.total-o.paid>0?"neg":"pos"}">${money(o.total-o.paid)}</td><td>${o.due||"-"}</td><td>${tag(o)}</td><td><button class="btn g s" onclick="pay('${o.id}')">Pay</button> <button class="btn g s" onclick="invoice('${o.id}')">Invoice</button> <button class="btn g s" onclick="orderForm('${o.id}')">Edit</button></td></tr>`).join("")}</table>`:'<div class="empty">No matching orders.</div>'}</div>`;
-}
+        <!-- Round Sticker -->
+        <article class="product-card" data-type="stk">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 160"><ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/><circle cx="80" cy="80" r="62" fill="#2b3a9e"/><text x="80" y="88" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="22" fill="#fff">BRAND</text><text x="80" y="106" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-size="9" fill="#fff" opacity=".85">YOUR LOGO HERE</text></svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">استيكر</span>
+              <h3 class="product-name">استيكر دائري</h3>
+              <p class="product-desc">مناسب للوجو والأختام وقفل العبوات.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>3×3 سم</option>
+                  <option>4×4 سم</option>
+                  <option>5×5 سم</option>
+                  <option>7×7 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>ورق لامع</option>
+                  <option>ورق مطفي</option>
+                  <option>فينيل PVC</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="استيكر دائري">أضف للسلة</button>
+          </div>
+        </article>
 
-function board(){
- return`<h1>Production board</h1><p class="sub">Move jobs through the shop floor. Urgent jobs and earliest deadlines come first.</p><div class="kan">${Object.entries(ST).map(([k,v],i)=>{const l=S.orders.filter(o=>o.status===k).sort(byPri);
- return`<div class="kcol"><h2>${v[0]} <span class="mut">${l.length}</span></h2>${l.map(o=>`<div class="card ${late(o)?"lt":""}"><b>#${o.no} · ${esc(cname(o.cid))}</b>${prBadge(o)}<div class="mut">${esc(o.type)} ${o.w}×${o.h} cm · ${num(o.qty)}</div><div class="mut">Due: ${o.due||"-"}</div><div class="bar" style="margin:8px 0 0;gap:6px">${i>0?`<button class="btn g s" onclick="mv('${o.id}',-1)">‹ Back</button>`:""}${i<3?`<button class="btn s" onclick="mv('${o.id}',1)">Next ›</button>`:""}<button class="btn g s" onclick="orderForm('${o.id}')">Edit</button></div></div>`).join("")||'<div class="mut">Empty</div>'}</div>`}).join("")}</div>`;
-}
-function mv(id,d){const k=Object.keys(ST),o=S.orders.find(x=>x.id===id);o.status=k[Math.min(3,Math.max(0,k.indexOf(o.status)+d))];save();render()}
+        <!-- Square Sticker -->
+        <article class="product-card" data-type="stk">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 160"><ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/><rect x="22" y="22" width="116" height="116" rx="16" fill="#c8283c"/><text x="80" y="88" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="22" fill="#fff">BRAND</text><text x="80" y="106" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-size="9" fill="#fff" opacity=".85">YOUR LOGO HERE</text></svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">استيكر</span>
+              <h3 class="product-name">استيكر مربع</h3>
+              <p class="product-desc">بحواف مدورة للتغليف والليبلز.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>3×3 سم</option>
+                  <option>5×5 سم</option>
+                  <option>10×10 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>ورق لامع</option>
+                  <option>ورق مطفي</option>
+                  <option>فينيل PVC</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="استيكر مربع">أضف للسلة</button>
+          </div>
+        </article>
 
-function cust(){
- const l=S.cust.filter(c=>!q||(c.name+c.phone).toLowerCase().includes(q.toLowerCase()));
- return`<h1>Customers</h1><p class="sub">Contacts and account balances</p>
- <div class="bar noprint"><button class="btn" onclick="custForm()">+ New customer</button><input class="search" placeholder="Search name or phone" value="${esc(q)}" oninput="q=this.value;go(1)" id="qs"></div>
- <div class="panel tw">${l.length?`<table><tr><th>Name</th><th>Phone</th><th>Orders</th><th>Total business</th><th>Balance</th><th></th></tr>${l.map(c=>{const os=S.orders.filter(o=>o.cid===c.id),t=os.reduce((a,o)=>a+o.total,0),p=os.reduce((a,o)=>a+o.paid,0);return`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${os.length}</td><td>${money(t)}</td><td class="${t-p>0?"neg":"pos"}">${money(t-p)}</td><td><button class="btn g s" onclick="custForm('${c.id}')">Edit</button></td></tr>`}).join("")}</table>`:'<div class="empty">No customers yet. Add your first one.</div>'}</div>`;
-}
+        <!-- Rectangle Sticker -->
+        <article class="product-card" data-type="stk">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 160"><ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/><rect x="8" y="42" width="144" height="76" rx="12" fill="#c99a2e"/><text x="80" y="86" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="24" fill="#fff">BRAND</text></svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">استيكر</span>
+              <h3 class="product-name">استيكر مستطيل</h3>
+              <p class="product-desc">الشكل المعتاد للعلب والزجاجات والشنط.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>5×3 سم</option>
+                  <option>7×5 سم</option>
+                  <option>10×5 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>ورق لامع</option>
+                  <option>ورق مطفي</option>
+                  <option>فينيل PVC</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="استيكر مستطيل">أضف للسلة</button>
+          </div>
+        </article>
 
-function sizeOpts(type,w,h){const l=S.sizes[type]||[],cur=l.findIndex(s=>s[0]==w&&s[1]==h);
- return`<option value="c" ${cur<0?"selected":""}>Custom size</option>`+l.map((s,i)=>`<option value="${i}" ${i===cur?"selected":""}>${s[0]} × ${s[1]} cm</option>`).join("")}
+        <!-- Transparent Sticker -->
+        <article class="product-card" data-type="stk">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 160"><ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/><rect x="8" y="42" width="144" height="76" rx="12" fill="none" stroke="#2b3a9e" stroke-width="3" stroke-dasharray="6 5"/><text x="80" y="86" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="24" fill="#2b3a9e">BRAND</text></svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">استيكر</span>
+              <h3 class="product-name">استيكر شفاف</h3>
+              <p class="product-desc">شكل نضيف على الزجاج والبلاستيك.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>5×3 سم</option>
+                  <option>5×5 سم</option>
+                  <option>10×5 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>فيلم شفاف</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="استيكر شفاف">أضف للسلة</button>
+          </div>
+        </article>
 
-function price(){
- const adm=isAdmin(),mk=(o,name,div)=>Object.keys(o).map(k=>`<div><label>${esc(k)}</label><input type="number" step="0.01" value="${div?Math.round(o[k]*100):o[k]}" onchange="S.${name}['${k}']=${div?"(+this.value)/100":"+this.value"};save();pc()"></div>`).join("");
- return`<h1>Price calculator</h1><p class="sub">Unit = width × height × type rate × material × colors × (1 + finish). Quantity discounts: 5% from 5,000, 10% from 10,000, 15% from 50,000.</p>
- <div class="panel"><div class="grid">
- <div><label>Type</label><select id="pt" onchange="pType()">${opts(TYPES)}</select></div>
- <div><label>Size preset</label><select id="ps" onchange="pSize()">${sizeOpts(TYPES[0],5,3)}</select></div>
- <div><label>Width (cm)</label><input id="pw" type="number" step="0.1" value="5" oninput="pCust()"></div>
- <div><label>Height (cm)</label><input id="ph" type="number" step="0.1" value="3" oninput="pCust()"></div>
- <div><label>Quantity</label><input id="pq" type="number" value="1000" oninput="pc()"></div>
- <div><label>Material</label><select id="pm" onchange="pc()">${opts(Object.keys(S.mats))}</select></div>
- <div><label>Colors</label><select id="pk" onchange="pc()">${opts(Object.keys(S.cols),"CMYK")}</select></div>
- <div><label>Finish</label><select id="pf" onchange="pc()">${opts(Object.keys(S.fin))}</select></div></div>
- <div class="res" id="pr"></div></div>
- ${adm?`<div class="panel"><h2>Rates (admin)</h2><p class="mut" style="margin-top:0">Placeholder values. Replace them with your real prices.</p><div class="grid">${TYPES.map(t=>`<div><label>${t} (EGP / cm²)</label><input type="number" step="0.001" value="${S.rates[t]}" onchange="S.rates['${t}']=+this.value;save();pc()"></div>`).join("")}
- <div><label>Machine setup (EGP)</label><input type="number" value="${S.setup}" onchange="S.setup=+this.value;save();pc()"></div>
- <div><label>Minimum order (EGP)</label><input type="number" value="${S.min}" onchange="S.min=+this.value;save();pc()"></div></div>
- <h2 style="margin-top:18px">Material multipliers</h2><div class="grid">${mk(S.mats,"mats",0)}</div>
- <h2 style="margin-top:18px">Color multipliers</h2><div class="grid">${mk(S.cols,"cols",0)}</div>
- <h2 style="margin-top:18px">Finish extra cost (%)</h2><div class="grid">${mk(S.fin,"fin",1)}</div></div>`:""}`;
-}
-function pType(){const t=$("#pt").value;$("#ps").innerHTML=sizeOpts(t,+$("#pw").value,+$("#ph").value);pc()}
-function pSize(){const v=$("#ps").value;if(v!=="c"){const s=S.sizes[$("#pt").value][+v];$("#pw").value=s[0];$("#ph").value=s[1]}pc()}
-function pCust(){$("#ps").innerHTML=sizeOpts($("#pt").value,+$("#pw").value,+$("#ph").value);pc()}
-function pc(){const e=$("#pr");if(!e)return;const w=+$("#pw").value||0,h=+$("#ph").value||0,n=+$("#pq").value||0,r=calc($("#pt").value,w,h,n,$("#pm").value,$("#pk").value,$("#pf").value);
- e.innerHTML=`<div><span class="mut">Unit price</span><b>EGP ${r.unit.toFixed(3)}</b></div><div><span class="mut">Quantity discount</span><b>${Math.round(r.tier*100)}%</b></div><div><span class="mut">Total</span><b>${money(r.total)}</b></div><div><span class="mut">Total + 14% VAT</span><b>${money(r.total*(1+VAT))}</b></div><div><span class="mut">Per 1,000</span><b>${money(n?r.total/n*1000:0)}</b></div>`}
+        <!-- Die-cut Sticker -->
+        <article class="product-card" data-type="stk">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 160"><ellipse cx="80" cy="150" rx="46" ry="5" fill="rgba(20,27,77,.12)"/><path d="M80 14c22 0 30 16 46 22s26 20 18 42-6 42-30 56-44 8-62-6S12 100 16 74s14-34 34-48S66 14 80 14z" fill="#c8283c"/><text x="80" y="88" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="22" fill="#fff">BRAND</text><text x="80" y="106" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-size="9" fill="#fff" opacity=".85">YOUR LOGO HERE</text></svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">استيكر</span>
+              <h3 class="product-name">استيكر بقص حسب الشكل</h3>
+              <p class="product-desc">مقصوص على شكل اللوجو أو التصميم بالظبط.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>شكل مخصص</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>ورق لامع</option>
+                  <option>ورق مطفي</option>
+                  <option>فينيل PVC</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>قص بالشكل</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="استيكر بقص حسب الشكل">أضف للسلة</button>
+          </div>
+        </article>
 
-function sizes(){
- const adm=isAdmin();
- return`<h1>Size library</h1><p class="sub">Common sizes per product. They show up as presets in orders and in the calculator.</p>${TYPES.map(t=>`<div class="panel"><h2>${t}</h2><div class="chips">${(S.sizes[t]||[]).map((s,i)=>`<span class="chip">${s[0]} × ${s[1]} cm${adm?` <button title="Remove" onclick="szDel('${t}',${i})">×</button>`:""}</span>`).join("")||'<span class="mut">No sizes yet</span>'}</div>${adm?`<div class="bar" style="margin:12px 0 0"><input id="sw-${tid(t)}" type="number" step="0.1" placeholder="Width cm" style="width:120px"><input id="sh-${tid(t)}" type="number" step="0.1" placeholder="Height cm" style="width:120px"><button class="btn s" onclick="szAdd('${t}')">Add size</button></div>`:""}</div>`).join("")}`;
-}
-function szAdd(t){if(!isAdmin())return;const w=+$("#sw-"+tid(t)).value,h=+$("#sh-"+tid(t)).value;if(!(w>0&&h>0))return;
- const l=S.sizes[t]=S.sizes[t]||[];if(!l.some(s=>s[0]===w&&s[1]===h))l.push([w,h]);l.sort((a,b)=>a[0]*a[1]-b[0]*b[1]);save();render()}
-function szDel(t,i){if(!isAdmin())return;S.sizes[t].splice(i,1);save();render()}
+        <!-- Standard Hang Tag -->
+        <article class="product-card" data-type="tag">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 200">
+              <path d="M80 54C54 24 52 4 80 4s26 20 0 50" fill="none" stroke="#9aa7b6" stroke-width="2.5"/>
+              <path d="M38 28h84l14 14v146a8 8 0 0 1-8 8H32a8 8 0 0 1-8-8V42z" fill="#fff" stroke="rgba(20,38,61,.2)"/>
+              <path d="M38 28h84l14 14H24z" fill="#141b4d"/>
+              <path d="M24 42h112v8H24z" fill="#141b4d"/>
+              <circle cx="80" cy="42" r="6" fill="#eceffa" stroke="rgba(20,38,61,.35)"/>
+              <text x="80" y="96" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="20" fill="#141b4d">BRAND</text>
+              <rect x="60" y="106" width="40" height="3" rx="1.5" fill="#141b4d"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">هانج تاج</span>
+              <h3 class="product-name">هانج تاج ستاندرد</h3>
+              <p class="product-desc">الكلاسيك بخرم، جاهز للخيط أو الدبوس البلاستيك.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>4×9 سم</option>
+                  <option>5×9 سم</option>
+                  <option>5×10 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>كارت آرت</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="هانج تاج ستاندرد">أضف للسلة</button>
+          </div>
+        </article>
 
-function render(){
- $("#main").innerHTML={dash,orders,board,cust,price,sizes,users,sync:syncv}[view]();
- document.querySelectorAll("nav [data-v]").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
- if(view==="price")pc();
- if(view==="sync")syUI();
-}
-function go(keepFocus){render();if(keepFocus){const i=$("#qs");if(i){i.focus();i.setSelectionRange(i.value.length,i.value.length)}}}
-function open(h,cls){$("#box").innerHTML=h;$("#modal").className="modal open"+(cls?" "+cls:"")}
-function close(){$("#modal").className="modal"}
+        <!-- Large Hang Tag -->
+        <article class="product-card" data-type="tag">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 200">
+              <path d="M80 54C54 24 52 4 80 4s26 20 0 50" fill="none" stroke="#9aa7b6" stroke-width="2.5"/>
+              <path d="M30 28h100l14 14v146a8 8 0 0 1-8 8H24a8 8 0 0 1-8-8V42z" fill="#fff" stroke="rgba(20,38,61,.2)"/>
+              <path d="M30 28h100l14 14H16z" fill="#c8283c"/>
+              <path d="M16 42h128v8H16z" fill="#c8283c"/>
+              <circle cx="80" cy="42" r="6" fill="#eceffa" stroke="rgba(20,38,61,.35)"/>
+              <text x="80" y="96" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="20" fill="#141b4d">BRAND</text>
+              <rect x="60" y="106" width="40" height="3" rx="1.5" fill="#c8283c"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">هانج تاج</span>
+              <h3 class="product-name">هانج تاج كبير</h3>
+              <p class="product-desc">لمعلومات أكتر عن المقاس والعناية بالمنتج.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>6×10 سم</option>
+                  <option>6×12 سم</option>
+                  <option>7×15 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>كارت آرت</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="هانج تاج كبير">أضف للسلة</button>
+          </div>
+        </article>
 
-function custForm(id){
- const c=S.cust.find(x=>x.id===id)||{name:"",phone:""};
- open(`<h2>${id?"Edit customer":"New customer"}</h2><div class="grid"><div><label>Name</label><input id="cn" value="${esc(c.name)}"></div><div><label>Phone</label><input id="cp" value="${esc(c.phone)}"></div></div>
- <div class="bar" style="margin:16px 0 0"><button class="btn" onclick="custSave('${id||""}')">Save customer</button><button class="btn g" onclick="close()">Cancel</button>${id&&isAdmin()?`<button class="btn d" style="margin-inline-start:auto" onclick="custDel('${id}')">Delete</button>`:""}</div>`);
-}
-function custSave(id){const n=$("#cn").value.trim();if(!n){$("#cn").focus();return}
- if(id){const c=S.cust.find(x=>x.id===id);c.name=n;c.phone=$("#cp").value.trim()}else S.cust.push({id:uid(),name:n,phone:$("#cp").value.trim()});
- save();close();render()}
-function custDel(id){if(S.orders.some(o=>o.cid===id)){alert("This customer has orders and can't be deleted.");return}if(confirm("Delete this customer?")){S.cust=S.cust.filter(c=>c.id!==id);save();close();render()}}
+        <!-- Kraft Hang Tag -->
+        <article class="product-card" data-type="tag">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 200">
+              <path d="M80 54C54 24 52 4 80 4s26 20 0 50" fill="none" stroke="#8a6a43" stroke-width="2.5"/>
+              <path d="M38 28h84l14 14v146a8 8 0 0 1-8 8H32a8 8 0 0 1-8-8V42z" fill="#c9a173" stroke="rgba(20,38,61,.2)"/>
+              <path d="M38 28h84l14 14H24z" fill="#8a6a43"/>
+              <path d="M24 42h112v8H24z" fill="#8a6a43"/>
+              <circle cx="80" cy="42" r="6" fill="#c9a173" stroke="rgba(20,38,61,.35)"/>
+              <text x="80" y="96" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="20" fill="#4b3520">BRAND</text>
+              <rect x="60" y="106" width="40" height="3" rx="1.5" fill="#8a6a43"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">هانج تاج</span>
+              <h3 class="product-name">هانج تاج كرافت</h3>
+              <p class="product-desc">ورق كرافت بني طبيعي لإحساس هاند ميد وصديق للبيئة.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>5×9 سم</option>
+                  <option>5×10 سم</option>
+                  <option>6×10 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>كارت كرافت</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>ورنيش</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="هانج تاج كرافت">أضف للسلة</button>
+          </div>
+        </article>
 
-function orderForm(id){
- if(!S.cust.length){alert("Add a customer first from the Customers page.");return}
- const o=S.orders.find(x=>x.id===id)||{cid:S.cust[0].id,type:TYPES[0],w:5,h:3,qty:1000,total:0,paid:0,status:"new",due:"",notes:""};
- const mat=o.mat||"Art paper",col=o.col||"CMYK",fin=o.fin||"None";
- open(`<h2>${id?"Edit order #"+o.no:"New order"}</h2><div class="grid">
- <div><label>Customer</label><select id="oc">${S.cust.map(c=>`<option value="${c.id}" ${c.id===o.cid?"selected":""}>${esc(c.name)}</option>`).join("")}</select></div>
- <div><label>Type</label><select id="ot" onchange="oType()">${opts(TYPES,o.type)}</select></div>
- <div><label>Size preset</label><select id="osz" onchange="oSize()">${sizeOpts(o.type,o.w,o.h)}</select></div>
- <div><label>Width (cm)</label><input id="ow" type="number" step="0.1" value="${o.w}" oninput="oCust()"></div>
- <div><label>Height (cm)</label><input id="oh" type="number" step="0.1" value="${o.h}" oninput="oCust()"></div>
- <div><label>Quantity</label><input id="oq" type="number" value="${o.qty}" oninput="oAuto()"></div>
- <div><label>Material</label><select id="om" onchange="oAuto()">${opts(Object.keys(S.mats),mat)}</select></div>
- <div><label>Colors</label><select id="ok" onchange="oAuto()">${opts(Object.keys(S.cols),col)}</select></div>
- <div><label>Finish</label><select id="of" onchange="oAuto()">${opts(Object.keys(S.fin),fin)}</select></div>
- <div><label>Extra discount (%)</label><input id="odc" type="number" min="0" max="100" step="0.5" value="${o.disc||0}" oninput="oAuto()"></div>
- <div><label>Priority</label><select id="opr"><option value="normal" ${o.pri!=="urgent"?"selected":""}>Normal</option><option value="urgent" ${o.pri==="urgent"?"selected":""}>Urgent</option></select></div>
- <div style="display:flex;align-items:end"><label style="display:flex;gap:8px;align-items:center;margin:0 0 10px;color:var(--ink)"><input id="ov" type="checkbox" style="width:auto" ${o.vat?"checked":""} onchange="oAuto()"> Add 14% VAT</label></div>
- <div><label>Total (EGP)</label><input id="ot2" type="number" step="0.01" value="${o.total||""}"></div>
- <div><label>Paid (EGP)</label><input id="op" type="number" step="0.01" value="${o.paid}"></div>
- <div><label>Due date</label><input id="od" type="date" value="${o.due}"></div>
- <div><label>Status</label><select id="os">${Object.entries(ST).map(([k,v])=>`<option value="${k}" ${k===o.status?"selected":""}>${v[0]}</option>`).join("")}</select></div></div>
- <div class="mut" id="ohint" style="margin-top:8px"></div>
- <div style="margin-top:12px"><label>Notes (job name, artwork file, special instructions)</label><textarea id="on" rows="2">${esc(o.notes)}</textarea></div>
- <div class="bar" style="margin:16px 0 0"><button class="btn" onclick="orderSave('${id||""}')">Save order</button><button class="btn g" onclick="close()">Cancel</button>${id&&isAdmin()?`<button class="btn d" style="margin-inline-start:auto" onclick="orderDel('${id}')">Delete</button>`:""}</div>`);
- if(!id)oAuto();
-}
-function oType(){$("#osz").innerHTML=sizeOpts($("#ot").value,+$("#ow").value,+$("#oh").value);oAuto()}
-function oSize(){const v=$("#osz").value;if(v!=="c"){const s=S.sizes[$("#ot").value][+v];$("#ow").value=s[0];$("#oh").value=s[1]}oAuto()}
-function oCust(){$("#osz").innerHTML=sizeOpts($("#ot").value,+$("#ow").value,+$("#oh").value);oAuto()}
-function oAuto(){const r=calc($("#ot").value,+$("#ow").value||0,+$("#oh").value||0,+$("#oq").value||0,$("#om").value,$("#ok").value,$("#of").value);
- let t=r.total*(1-(+$("#odc").value||0)/100);if($("#ov").checked)t*=1+VAT;
- $("#ot2").value=Math.round(t*100)/100;
- $("#ohint").textContent="Auto price: EGP "+r.unit.toFixed(3)+" per piece"+(r.tier?" · quantity discount "+Math.round(r.tier*100)+"%":"")+". You can still edit the total manually."}
-function orderSave(id){
- const d={cid:$("#oc").value,type:$("#ot").value,w:+$("#ow").value||0,h:+$("#oh").value||0,qty:+$("#oq").value||0,mat:$("#om").value,col:$("#ok").value,fin:$("#of").value,disc:+$("#odc").value||0,pri:$("#opr").value,vat:$("#ov").checked,total:+$("#ot2").value||0,paid:+$("#op").value||0,due:$("#od").value,status:$("#os").value,notes:$("#on").value.trim()};
- if(d.qty<=0){$("#oq").focus();return}
- if(id)Object.assign(S.orders.find(x=>x.id===id),d);else S.orders.push(Object.assign({id:uid(),no:S.seq++,date:today()},d));
- save();close();render()}
-function orderDel(id){if(!isAdmin())return;if(confirm("Delete this order?")){S.orders=S.orders.filter(o=>o.id!==id);save();close();render()}}
-function pay(id){const o=S.orders.find(x=>x.id===id),bal=o.total-o.paid;if(bal<=0.001){alert("This order is fully paid.");return}
- const v=prompt("Payment amount (EGP). Balance: "+bal.toFixed(2),bal.toFixed(2));if(v===null)return;const a=+v;
- if(!(a>0)||a>bal+0.001){alert("Enter an amount between 0 and the balance.");return}
- o.paid=Math.round((o.paid+a)*100)/100;save();render()}
-function csv(){
- const h=["No","Date","Customer","Type","Material","Colors","Finish","Width","Height","Qty","Total","Paid","Balance","Due","Status","Notes"];
- const r=S.orders.map(o=>[o.no,o.date,cname(o.cid),o.type,o.mat||"",o.col||"",o.fin||"",o.w,o.h,o.qty,o.total,o.paid,Math.round((o.total-o.paid)*100)/100,o.due,ST[o.status][0],o.notes||""]);
- const cell=v=>{v=String(v??"");if(/^[=+\-@]/.test(v))v="'"+v;return'"'+v.replace(/"/g,'""')+'"'};
- const c=[h,...r].map(a=>a.map(cell).join(",")).join("\r\n");
- const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent("\ufeff"+c);a.download="orders-"+today()+".csv";a.click()}
+        <!-- Foil Hang Tag -->
+        <article class="product-card" data-type="tag">
+          <div class="product-visual">
+            <svg viewBox="0 0 160 200">
+              <defs>
+                <linearGradient id="foilGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#f6d56a"/>
+                  <stop offset=".5" stop-color="#b78a1c"/>
+                  <stop offset="1" stop-color="#f6d56a"/>
+                </linearGradient>
+              </defs>
+              <path d="M80 54C54 24 52 4 80 4s26 20 0 50" fill="none" stroke="#9aa7b6" stroke-width="2.5"/>
+              <path d="M38 28h84l14 14v146a8 8 0 0 1-8 8H32a8 8 0 0 1-8-8V42z" fill="#fff" stroke="rgba(20,38,61,.2)"/>
+              <path d="M38 28h84l14 14H24z" fill="url(#foilGrad)"/>
+              <path d="M24 42h112v8H24z" fill="url(#foilGrad)"/>
+              <circle cx="80" cy="42" r="6" fill="#eceffa" stroke="rgba(20,38,61,.35)"/>
+              <text x="80" y="96" text-anchor="middle" font-family="IBM Plex Sans Arabic,Arial" font-weight="700" font-size="20" fill="#141b4d">BRAND</text>
+              <rect x="60" y="106" width="40" height="3" rx="1.5" fill="url(#foilGrad)"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div>
+              <span class="product-type">هانج تاج</span>
+              <h3 class="product-name">هانج تاج فويل</h3>
+              <p class="product-desc">تفاصيل فويل معدنية بتخلي براندك مميز.</p>
+            </div>
+            <div class="product-options">
+              <label class="field-label">المقاس
+                <select class="field" data-field="size">
+                  <option>5×9 سم</option>
+                  <option>6×10 سم</option>
+                  <option>6×12 سم</option>
+                </select>
+              </label>
+              <label class="field-label">الخامة
+                <select class="field" data-field="material">
+                  <option>كارت آرت</option>
+                </select>
+              </label>
+              <label class="field-label">التشطيب
+                <select class="field" data-field="finish">
+                  <option>فويل</option>
+                  <option>سلوفان</option>
+                </select>
+              </label>
+              <label class="field-label">الكمية
+                <input class="field" type="number" min="1" value="1000" data-field="qty" />
+              </label>
+            </div>
+            <button class="add-btn" type="button" data-name="هانج تاج فويل">أضف للسلة</button>
+          </div>
+        </article>
 
-function invoice(id){
- const o=S.orders.find(x=>x.id===id),c=S.cust.find(x=>x.id===o.cid)||{name:"-",phone:""};
- const net=o.vat?o.total/(1+VAT):o.total,vat=o.total-net;
- open(`<div class="inv"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><div><h2 style="margin:0"><span class="wm" style="font-size:24px" role="img" aria-label="F-A-R-S-S">F<i></i>A<i></i>R<i></i>S<i></i>S</span></h2><div>El Quds School St, Third Al Montazah, Alexandria</div><div>010 04412327</div></div><div><b>Invoice #${o.no}</b><div>Date: ${o.date}</div></div></div><hr>
- <p><b>Customer:</b> ${esc(c.name)} ${c.phone?" - "+esc(c.phone):""}</p>
- <table><tr><th>Item</th><th>Size</th><th>Qty</th><th>Unit price</th><th>Amount</th></tr><tr><td>${esc(o.type)}<br><small>${esc([o.mat,o.col,o.fin&&o.fin!=="None"?o.fin:""].filter(Boolean).join(" · "))}${o.notes?"<br>"+esc(o.notes):""}</small></td><td>${o.w}×${o.h} cm</td><td>${num(o.qty)}</td><td>${(net/o.qty).toFixed(3)}</td><td>${money(net)}</td></tr></table>
- <p style="text-align:right;margin-top:14px">${o.disc?`Discount applied: ${o.disc}%<br>`:""}${o.vat?`VAT 14%: ${money(vat)}<br>`:""}Total: <b>${money(o.total)}</b><br>Paid: <b>${money(o.paid)}</b><br>Balance due: <b>${money(o.total-o.paid)}</b></p>
- ${o.due?`<p>Delivery date: ${o.due}</p>`:""}</div>
- <div class="bar noprint" style="margin:14px 0 0"><button class="btn" onclick="window.print()">Print</button><button class="btn g" onclick="close()">Close</button></div>`,"print");
-}
+      </div>
+    </section>
 
-document.querySelectorAll("nav [data-v]").forEach(b=>b.onclick=()=>{view=b.dataset.v;q="";fs="all";render()});
-$("#modal").onclick=e=>{if(e.target.id==="modal")close()};
-document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
-$("#theme").onclick=()=>{const r=document.documentElement,d=r.dataset.theme==="dark"||(!r.dataset.theme&&matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark"};
-$("#bk").onclick=()=>{const a=document.createElement("a");a.href="data:application/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(S));a.download="farss-"+today()+".json";a.click()};
-$("#rs").onclick=()=>$("#file").click();
-$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d.orders)||!Array.isArray(d.cust))throw 0;S=Object.assign(S,d);norm();save();render()}catch(x){alert("This file is not a valid backup.")}};r.readAsText(f);e.target.value=""};
+    <!-- How it works -->
+    <section class="section" style="padding-top:0">
+      <h2 class="section-title">الطلب بيتم إزاي</h2>
+      <div class="steps" style="margin-top:2rem">
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <h3>اختار المنتج</h3>
+          <p>استيكر أو هانج تاج يناسب منتجك.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">02</span>
+          <h3>ضيف للسلة</h3>
+          <p>حدد المقاس والخامة والتشطيب والكمية.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <h3>أكد طلبك</h3>
+          <p>هنكلمك نأكد السعر والمعاد وبعدها نطبع.</p>
+        </div>
+      </div>
+    </section>
 
-/* ---------- Authentication ---------- */
-const UK="ceaser_users_v1",UOK=/^[a-z0-9._-]{3,30}$/;
-let U=[];try{U=JSON.parse(localStorage.getItem(UK)||"[]")}catch(e){}
-const saveU=()=>{try{localStorage.setItem(UK,JSON.stringify(U))}catch(e){}};
-let me=null,fails=0,lockUntil=0;
-try{me=sessionStorage.getItem("ceaser_sess")}catch(e){}
-const isAdmin=()=>{const u=U.find(x=>x.u===me);return !!u&&u.role==="admin"};
-const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
-const hasCrypto=()=>!!(window.crypto&&crypto.subtle);
-const newSalt=()=>hex(crypto.getRandomValues(new Uint8Array(16)));
-async function hp(p,salt){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(p),"PBKDF2",false,["deriveBits"]);return hex(await crypto.subtle.deriveBits({name:"PBKDF2",salt:new TextEncoder().encode(salt),iterations:150000,hash:"SHA-256"},k,256))}
-function authScreen(){
- document.body.classList.add("locked");
- const first=false;
- $("#auth").innerHTML=`<aside class="aside"><span class="wm" role="img" aria-label="F-A-R-S-S">F<i></i>A<i></i>R<i></i>S<i></i>S</span><p>Orders, production and pricing for the print shop.</p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke-width=".15"/><circle cx="12" cy="12" r="6.5" stroke-width=".15"/><circle cx="12" cy="12" r="2.5" stroke-width=".15"/><path d="M12 0v24M0 12h24" stroke-width=".15"/></svg></aside><div class="aform"><div class="acard">
- <h2>${first?"Create admin account":"Sign in"}</h2><p class="mut" style="margin-top:0">${first?"First launch: choose the admin username and password.":"Enter your credentials to continue."}</p>
- <label>Username</label><input id="au" autocomplete="username" autocapitalize="none">
- <label style="margin-top:10px">Password</label><input id="ap" type="password" autocomplete="${first?"new-password":"current-password"}">
- ${first?'<label style="margin-top:10px">Confirm password</label><input id="ac" type="password" autocomplete="new-password">':""}
- <div class="neg" id="ae" style="min-height:24px;margin:8px 0"></div>
- <button class="btn" style="width:100%" id="ago">${first?"Create account":"Sign in"}</button></div></div>`;
- $("#auth").hidden=false;
- $("#ago").onclick=()=>doAuth(first);
- $("#auth").onkeydown=e=>{if(e.key==="Enter")doAuth(first)};
- $("#au").focus();
-}
-async function doAuth(first){
- const u=$("#au").value.trim().toLowerCase(),p=$("#ap").value,e=$("#ae");
- if(first){
-  if(!UOK.test(u)){e.textContent="Username: 3-30 letters, numbers, dot, dash or underscore.";return}
-  if(p.length<8){e.textContent="Password must be at least 8 characters.";return}
-  if(p!==$("#ac").value){e.textContent="Passwords do not match.";return}
-  const salt=newSalt();U.push({u,salt,hash:await hp(p,salt),role:"admin"});saveU();return enter(u);
- }
- if(Date.now()<lockUntil){e.textContent="Too many attempts. Try again in "+Math.ceil((lockUntil-Date.now())/1000)+"s.";return}
- const ok=u==="admin"&&p==="admin";
- if(ok&&!U.some(x=>x.u==="admin")){U.push({u:"admin",salt:"",hash:"",role:"admin"});saveU()}
- if(!ok){if(++fails>=5){fails=0;lockUntil=Date.now()+30000}e.textContent="Wrong username or password.";return}
- fails=0;enter(u);
-}
-function enter(u){me=u;try{sessionStorage.setItem("ceaser_sess",u)}catch(e){}
- $("#auth").hidden=true;$("#auth").innerHTML="";document.body.classList.remove("locked");
- $("#nu").hidden=!isAdmin();$("#rs").hidden=!isAdmin();$("#who").textContent="Signed in: "+u+" ("+(isAdmin()?"admin":"staff")+")";
- view="dash";q="";fs="all";render();syUI();if(syOn())syncNow()}
-function logout(){me=null;try{sessionStorage.removeItem("ceaser_sess")}catch(e){}close();authScreen()}
-$("#lo").onclick=logout;
+    <!-- Cart -->
+    <section id="cart" class="section" style="padding-top:0">
+      <h2 class="section-title">السلة</h2>
+      <p class="section-desc" style="margin-bottom:2rem">راجع طلبك وضيف بياناتك وأكد. مفيش دفع دلوقتي.</p>
 
-function users(){
- if(!isAdmin())return'<div class="empty">Admins only.</div>';
- return`<h1>Users</h1><p class="sub">Manage who can sign in. Staff can't delete records, manage users or restore backups.</p>
- <div class="panel"><h2>Add user</h2><div class="grid"><div><label>Username</label><input id="nu1" autocomplete="off" autocapitalize="none"></div><div><label>Password (min 8)</label><input id="np1" type="password" autocomplete="new-password"></div><div><label>Role</label><select id="nr"><option value="staff">Staff</option><option value="admin">Admin</option></select></div></div>
- <div class="neg" id="ue" style="min-height:24px;margin:8px 0"></div><button class="btn" onclick="userAdd()">Add user</button></div>
- <div class="panel tw"><table><tr><th>Username</th><th>Role</th><th></th></tr>${U.map(x=>`<tr><td>${esc(x.u)}${x.u===me?' <span class="mut">(you)</span>':""}</td><td>${x.role}</td><td><button class="btn g s" onclick="userPw('${x.u}')">Reset password</button> ${x.u!==me?`<button class="btn d s" onclick="userDel('${x.u}')">Delete</button>`:""}</td></tr>`).join("")}</table></div>`;
-}
-async function userAdd(){
- if(!isAdmin())return;
- const u=$("#nu1").value.trim().toLowerCase(),p=$("#np1").value,e=$("#ue");
- if(!UOK.test(u)){e.textContent="Username: 3-30 letters, numbers, dot, dash or underscore.";return}
- if(U.some(x=>x.u===u)){e.textContent="That username already exists.";return}
- if(p.length<8){e.textContent="Password must be at least 8 characters.";return}
- const salt=newSalt();U.push({u,salt,hash:await hp(p,salt),role:$("#nr").value});saveU();render();
-}
-async function userPw(u){
- if(!isAdmin())return;
- const p=prompt("New password for "+u+" (min 8 characters):");
- if(p===null)return;if(p.length<8){alert("Password must be at least 8 characters.");return}
- const rec=U.find(x=>x.u===u);rec.salt=newSalt();rec.hash=await hp(p,rec.salt);saveU();alert("Password updated.");
-}
-function userDel(u){
- if(!isAdmin()||u===me)return;
- if(confirm("Delete user "+u+"?")){U=U.filter(x=>x.u!==u);saveU();render()}
-}
+      <div class="cart-grid">
+        <div class="cart-box">
+          <div id="cartItems" class="cart-empty">السلة فاضية. ضيف منتجات من فوق.</div>
+        </div>
 
-if(me&&U.some(x=>x.u===me))enter(me);else authScreen();
-</script>
+        <div class="cart-box">
+          <form id="orderForm" class="form-grid">
+            <label class="field-label">اسمك
+              <input class="field" type="text" name="name" required />
+            </label>
+            <label class="field-label">رقم التليفون / واتساب
+              <input class="field" type="tel" name="phone" dir="ltr" required />
+            </label>
+            <label class="field-label">الإيميل (اختياري)
+              <input class="field" type="email" name="email" dir="ltr" />
+            </label>
+            <label class="field-label">العنوان / الشركة (اختياري)
+              <input class="field" type="text" name="address" />
+            </label>
+            <label class="field-label full">ملاحظات (اختياري)
+              <input class="field" type="text" name="notes" />
+            </label>
+          </form>
+          <button class="submit-btn" type="button" id="submitOrder" disabled>تأكيد الطلب</button>
+          <p class="note">السعر بيعتمد على المقاس والخامة والتشطيب والكمية، وبنأكده معاك قبل الطباعة.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 18h18l1.3-10-5.2 4L12 4.5 6.9 12 1.7 8z"/>
+          </svg>
+          <b>F-A-R-S-S</b>
+        </div>
+        <p class="footer-address">المعهد العالي للعلوم الاداريه المتقدمه والحاسبات بالبحيره</p>
+      </div>
+      <div class="footer-links">
+        <a href="tel:+201278040272" dir="ltr">01278040272</a>
+        <a href="https://wa.me/201278040272" target="_blank" rel="noopener">واتساب</a>
+        <a href="https://www.google.com/maps/search/?api=1&query=2+Mohamed+Fawzy+Moaz+St+Sidi+Gaber+Alexandria" target="_blank" rel="noopener">افتح في الخرائط</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Cart State =====
+    const cart = [];
+    const cartCountEl = document.getElementById("cartCount");
+    const cartItemsEl = document.getElementById("cartItems");
+    const submitBtn = document.getElementById("submitOrder");
+
+    function updateCartUI() {
+      cartCountEl.textContent = cart.length;
+      submitBtn.disabled = cart.length === 0;
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<div class="cart-empty">السلة فاضية. ضيف منتجات من فوق.</div>';
+        cartItemsEl.className = "cart-empty";
+        return;
+      }
+
+      cartItemsEl.className = "";
+      cartItemsEl.innerHTML = cart.map((item, i) => `
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;padding:0.85rem 0;border-bottom:1px solid var(--border)">
+          <div>
+            <strong style="font-size:0.95rem">${item.name}</strong>
+            <div style="font-size:0.8rem;color:var(--muted);margin-top:0.25rem">
+              ${item.size} · ${item.material} · ${item.finish} · ${item.qty} قطعة
+            </div>
+          </div>
+          <button type="button" data-remove="${i}" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.1rem;line-height:1" title="حذف">×</button>
+        </div>
+      `).join("");
+    }
+
+    // Add to cart
+    document.querySelectorAll(".add-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".product-card");
+        const name = btn.dataset.name;
+        const size = card.querySelector('[data-field="size"]').value;
+        const material = card.querySelector('[data-field="material"]').value;
+        const finish = card.querySelector('[data-field="finish"]').value;
+        const qty = card.querySelector('[data-field="qty"]').value || 1000;
+
+        cart.push({ name, size, material, finish, qty });
+        updateCartUI();
+
+        // Brief feedback
+        const original = btn.textContent;
+        btn.textContent = "تمت الإضافة ✓";
+        btn.style.background = "#16a34a";
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.background = "";
+        }, 1200);
+      });
+    });
+
+    // Remove from cart
+    cartItemsEl.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-remove]");
+      if (!btn) return;
+      cart.splice(Number(btn.dataset.remove), 1);
+      updateCartUI();
+    });
+
+    // Filter
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const filter = btn.dataset.filter;
+        document.querySelectorAll(".product-card").forEach(card => {
+          if (filter === "all" || card.dataset.type === filter) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Submit order → WhatsApp
+    submitBtn.addEventListener("click", () => {
+      const form = document.getElementById("orderForm");
+      if (!form.reportValidity()) return;
+
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const email = form.email.value.trim();
+      const address = form.address.value.trim();
+      const notes = form.notes.value.trim();
+
+      let message = `طلب جديد من موقع F-A-R-S-S%0A%0A`;
+      message += `الاسم: ${name}%0A`;
+      message += `التليفون: ${phone}%0A`;
+      if (email) message += `الإيميل: ${email}%0A`;
+      if (address) message += `العنوان: ${address}%0A`;
+      if (notes) message += `ملاحظات: ${notes}%0A`;
+      message += `%0Aالمنتجات:%0A`;
+      cart.forEach((item, i) => {
+        message += `${i + 1}. ${item.name} — ${item.size} | ${item.material} | ${item.finish} | كمية: ${item.qty}%0A`;
+      });
+
+      window.open(`https://wa.me/201281847512?text=${message}`, "_blank");
+    });
+  </script>
 </body>
 </html>
